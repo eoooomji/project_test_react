@@ -16,6 +16,7 @@
     "redux-actions": "^2.6.5",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "https://openapi.naver.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

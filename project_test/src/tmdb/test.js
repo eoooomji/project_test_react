@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import baseUrl from '../commonApi/baseUrl';
-import searchUrl from '../commonApi/searchUrl';
-import TMDB_KEY from '../commonApi/tmdb_key';
+import baseUrl from '../commonApi_tmdb/baseUrl';
+import searchUrl from '../commonApi_tmdb/searchUrl';
+import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
 import axios from 'axios';
 import MovieTest from './movieTest';
 
-const Test = () => {
+const Test_tmdb = () => {
   const lang = 'ko';
   const now = '/now_playing?';
   const popular = '/popluar?';
@@ -73,4 +73,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Test_tmdb;

@@ -3,7 +3,10 @@ const MovieTest = (props) => {
   const imageUrl = 'https://image.tmdb.org/t/p/w500';
   return (
     <tr>
-      <td>{movie.title}</td>
+      <td>
+        {movie.title}
+        {movie.id}
+      </td>
       <td>{movie.overview}</td>
       <td>
         <img
@@ -11,6 +14,8 @@ const MovieTest = (props) => {
           width='300'
         />
       </td>
+      <td>{movie.release_date}</td>
+      <td>{movie.genre_ids}</td>
     </tr>
   );
 };
