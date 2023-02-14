@@ -1,4 +1,4 @@
-const naverHeaders = {
+const NaverHeaders = {
   headers: {
     'Content-Type': 'application/json',
     'X-Naver-Client-Id': '1AZu2ARHxSTGMdaorTiv',
@@ -6,4 +6,4 @@ const naverHeaders = {
   },
 };
 
-export default naverHeaders;
+export default NaverHeaders;
