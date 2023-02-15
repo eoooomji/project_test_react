@@ -1,0 +1,50 @@
+html {
+  padding: 0;
+  margin: 0;
+  background-color: antiquewhite;
+}
+
+.mp_profile {
+  background-color: hotpink;
+  width: 100%;
+  height: 300px;
+  float: left;
+}
+
+.user_contents {
+  margin: 0 auto; /* 가로 가운데 정렬 */
+  width: 1400px;
+  height: 100%;
+  background-color: pink;
+}
+
+.user_content {
+  background-color: white;
+  border: 3px solid rgb(235, 235, 235);
+  width: 100%;
+  height: 300px;
+  float: left;
+  margin-top: 30px;
+  border-radius: 20px;
+}
+
+.top3 {
+  text-align: center;
+  background-color: wheat;
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.top3 li {
+  width: 100px;
+  height: 80px;
+  text-align: center;
+  list-style-type: none;
+  margin-right: 100px;
+  float: left;
+}
+
+.user_contents h3 {
+  text-align: left;
+}

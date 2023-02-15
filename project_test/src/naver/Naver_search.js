@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import NaverUrl from '../commonApi_naver/naverUrl';
 import NaverHeaders from '../commonApi_naver/naverHeaders';
 import NaverInfo from './Naver_info';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import Tmdb_main from '../tmdb/Tmdb_main';
 
 const Naver_Search = () => {
@@ -11,10 +11,6 @@ const Naver_Search = () => {
   const [input, setInput] = useState('');
   //console.log(title);
   //const search = naverUrl + 'query=아이언맨' + '&display=100';
-
-  useEffect(() => {
-    getSearchList();
-  }, []);
 
   const getSearchList = async (e) => {
     //e.preventDefault();
@@ -28,6 +24,10 @@ const Naver_Search = () => {
         console.log(err.message);
       });
   };
+
+  useEffect(() => {
+    getSearchList();
+  }, []);
 
   const handleInputText = (e) => {
     e.preventDefault();

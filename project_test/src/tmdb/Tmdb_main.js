@@ -30,7 +30,7 @@ const Tmdb_main = () => {
     await axios
       .get(nowShow)
       .then((response) => {
-        console.log(response.data.results);
+        //console.log(response.data.results);
         setMovieList(response.data.results);
       })
       .catch((err) => {
@@ -47,7 +47,7 @@ const Tmdb_main = () => {
     await axios
       .get(popShow)
       .then((response) => {
-        console.log(response.data.results);
+        //console.log(response.data.results);
         setPopList(response.data.results);
       })
       .catch((err) => {

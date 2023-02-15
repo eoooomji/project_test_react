@@ -5,8 +5,8 @@ import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
 
 const MovieDetail = () => {
   const location = useLocation();
-  const title = location.state.title;
-  console.log(title);
+
+  console.log(location);
 
   //   const { title, releasDate } = props;
   //   const query = title;

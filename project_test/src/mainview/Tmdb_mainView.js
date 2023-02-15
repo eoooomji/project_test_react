@@ -1,15 +1,12 @@
+import { Outlet } from 'react-router-dom';
 import Naver_Search from '../naver/Naver_search';
 import Tmdb_main from '../tmdb/Tmdb_main';
 
 const MainView = () => {
   return (
     <>
-      <div className='searchMovie'>
-        <Naver_Search />
-      </div>
-      <div>
-        <Tmdb_main />
-      </div>
+      <h3>영화 메인 페이지</h3>
+      <div className='searchMovie'>{<Naver_Search />}</div>
     </>
   );
 };

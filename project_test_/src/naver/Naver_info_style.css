@@ -1,0 +1,23 @@
+.search_list {
+  width: 1720px;
+  height: 100%;
+  background-color: blue;
+  margin: 0 auto;
+}
+
+.search_movie_list {
+  float: left;
+  width: 300px;
+  height: 300px;
+  background-color: yellowgreen;
+}
+
+.movie_image {
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+}
+
+.poster {
+  width: 150px;
+}
