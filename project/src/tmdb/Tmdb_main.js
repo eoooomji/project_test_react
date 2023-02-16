@@ -10,7 +10,10 @@ const Tmdb_main = () => {
   const lang = '&language=ko';
   const now = '/now_playing?';
   const popular = '/popular?';
+  const [page, setPage] = useState(1);
+
   const nowShow = TmdbUrl + now + 'api_key=' + TMDB_KEY + lang;
+
   const popShow = TmdbUrl + popular + 'api_key=' + TMDB_KEY + lang;
 
   // 현재 상영작
@@ -24,12 +27,13 @@ const Tmdb_main = () => {
   }, []);
 
   // 현재 상영작 리스트
-  const getMovieList = async () => {
+  const getMovieList = async (e) => {
     await axios
-      .get(nowShow)
+      .get(nowShow + '&page=' + page)
       .then((response) => {
-        //console.log(response.data.results);
-        setMovieList(response.data.results);
+        //console.log(response.data);
+        setMovieList(movieList.concat(response.data.results));
+        setPage(page + 1);
       })
       .catch((err) => {
         console.log(err.message);
@@ -43,16 +47,24 @@ const Tmdb_main = () => {
   // 인기작 리스트
   const getPopList = async () => {
     await axios
-      .get(popShow)
+      .get(popShow + '&page=' + page)
       .then((response) => {
         //console.log(response.data.results);
-        setPopList(response.data.results);
+        setPopList(popList.concat(response.data.results));
+        setPage(page + 1);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
+  const handleChangeNow = (e) => {
+    getMovieList(e.target.value);
+  };
+
+  const handleChangePop = (e) => {
+    getPopList(e.target.value);
+  };
   return (
     <>
       <p className='tag_name'>#현재상영작</p>
@@ -60,12 +72,18 @@ const Tmdb_main = () => {
         {movieList.map((movie) => {
           return <MovieInfo movie={movie} key={movie.id} />;
         })}
+        <div className='button_wrap'>
+          {page === 10 ? null : (
+            <button onClick={handleChangeNow}>더보기</button>
+          )}
+        </div>
       </div>
       <p className='tag_name'>#인기작</p>
       <div className='popular'>
         {popList.map((movie) => {
           return <MoviePop movie={movie} key={movie.id} />;
         })}
+        {page === 10 ? null : <button onClick={handleChangePop}>더보기</button>}
       </div>
     </>
   );

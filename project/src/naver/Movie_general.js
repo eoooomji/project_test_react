@@ -6,19 +6,16 @@ import NaverInfo from './Naver_info';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Tmdb_main from '../tmdb/Tmdb_main';
 
-const Naver_Search = () => {
+const Movie = () => {
   const [searchMovieList, setSearchMovieList] = useState([]);
   const [input, setInput] = useState('');
-  const navigator = useNavigate();
-  //console.log(title);
-  //const search = naverUrl + 'query=아이언맨' + '&display=100';
 
   const getSearchList = async (e) => {
     await axios
       .get(NaverUrl + 'query=' + input + '&display=100', NaverHeaders)
       .then((response) => {
         setInput(input);
-        console.log(response.data.items);
+        //console.log(response.data.items);
         setSearchMovieList(response.data.items);
       })
       .catch((err) => {
@@ -69,4 +66,4 @@ const Naver_Search = () => {
   );
 };
 
-export default Naver_Search;
+export default Movie;

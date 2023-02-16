@@ -5,6 +5,7 @@ import MainView from './mainview/Tmdb_mainView';
 import LoginForm from './components/login/loginForm';
 import MyPage from './components/mypage/mypage';
 import MovieDetail from './tmdb/Tmdb_detail';
+import NaverInfo from './naver/Naver_info';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/login' element={<LoginForm />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/detail/:movie_id' element={<MovieDetail />} />
+        <Route path='/detail/:movie_id' element={<NaverInfo />} />
       </Routes>
     </div>
   );
