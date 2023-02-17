@@ -36,3 +36,9 @@
   overflow: auto;
   margin: 0 auto;
 }
+
+/* ================================================= */
+
+.button_more {
+  margin-top: 10px;
+}

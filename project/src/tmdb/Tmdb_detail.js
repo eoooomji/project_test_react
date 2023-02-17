@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import TmdbUrl from '../commonApi_tmdb/tmdbUrl';
 import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
 import Footer from '../components/layout/footer';
 import Header from '../components/layout/header';
 
 const MovieDetail = () => {
+  const navigator = useNavigate();
+
   const [movieInfo, setMovieInfo] = useState([]);
   const [genre, setGenre] = useState([]);
   const [castInfo, setCastInfo] = useState([]);
@@ -17,6 +19,10 @@ const MovieDetail = () => {
   });
 
   const { movie_id } = useParams();
+  if (movie_id === null) {
+    navigator();
+  }
+  console.log(movie_id);
 
   const lang = '&language=ko';
 
@@ -24,7 +30,7 @@ const MovieDetail = () => {
     await axios
       .get(TmdbUrl + '/' + movie_id + '?api_key=' + TMDB_KEY + lang)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setMovieInfo(response.data);
         setGenre(response.data.genres);
       })
@@ -39,7 +45,7 @@ const MovieDetail = () => {
         TmdbUrl + '/' + movie_id + '/credits' + '?api_key=' + TMDB_KEY + lang
       )
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setCastInfo(response.data.cast);
         for (let i = 0; i < response.data.crew.length; i++) {
           if (response.data.crew[i].job === 'Director') {

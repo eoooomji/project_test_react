@@ -1,22 +1,32 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import NaverUrl from '../commonApi_naver/naverUrl';
-import NaverHeaders from '../commonApi_naver/naverHeaders';
-import NaverInfo from './Naver_info';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import Tmdb_main from '../tmdb/Tmdb_main';
+import Tmdb_main from './Tmdb_main';
+import TmdbsearchUrl from '../commonApi_tmdb/tmdbSearchUrl';
+import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
+import Search_Movie from './Search_info';
+import Genre_btn from './Tmdb_genre';
 
 const Movie = () => {
   const [searchMovieList, setSearchMovieList] = useState([]);
   const [input, setInput] = useState('');
+  const lang = '&language=ko';
 
   const getSearchList = async (e) => {
     await axios
-      .get(NaverUrl + 'query=' + input + '&display=100', NaverHeaders)
+      .get(
+        TmdbsearchUrl +
+          '?api_key=' +
+          TMDB_KEY +
+          lang +
+          '&query=' +
+          input +
+          '&include_adult=false'
+      )
       .then((response) => {
         setInput(input);
-        //console.log(response.data.items);
-        setSearchMovieList(response.data.items);
+        //console.log(response.data);
+        setSearchMovieList(response.data.results);
       })
       .catch((err) => {
         console.log(err.message);
@@ -37,17 +47,24 @@ const Movie = () => {
   return (
     <div>
       <form onSubmit={searchMv}>
-        <div>
-          <input
-            type='text'
-            required={true}
-            placeholder='제목, 장르를 검색해주세요. (ex: 코미디 영화, 액션 영화)'
-            onChange={handleInputText}
-            value={input}
-          />
-          <input type='submit' value='검색' />
+        <div className='search_wrap'>
+          <div className='search_box'>
+            <input
+              type='text'
+              required={true}
+              placeholder='검색어를 입력해주세요.'
+              onChange={handleInputText}
+              value={input}
+            />
+            <input type='submit' value='검색' />
+          </div>
         </div>
       </form>
+      <br />
+      <div>
+        <Genre_btn />
+      </div>
+      <br />
       {input === '' ? (
         <Tmdb_main />
       ) : (
@@ -56,7 +73,7 @@ const Movie = () => {
             <div>
               {searchMovieList &&
                 searchMovieList.map((movie, index) => {
-                  return <NaverInfo movie={movie} key={index} />;
+                  return <Search_Movie movie={movie} key={index} />;
                 })}
             </div>
           </div>

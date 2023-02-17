@@ -17,14 +17,9 @@ const Header = () => {
           </li>
         </ul>
       </div>
-
       <h1>
         <NavLink to='/'>HEADER</NavLink>
       </h1>
-
-      {/* <div>
-        <Naver_Search />
-      </div> */}
     </div>
   );
 };

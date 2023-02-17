@@ -65,6 +65,7 @@ const Tmdb_main = () => {
   const handleChangePop = (e) => {
     getPopList(e.target.value);
   };
+
   return (
     <>
       <p className='tag_name'>#현재상영작</p>
@@ -72,18 +73,26 @@ const Tmdb_main = () => {
         {movieList.map((movie) => {
           return <MovieInfo movie={movie} key={movie.id} />;
         })}
-        <div className='button_wrap'>
-          {page === 10 ? null : (
-            <button onClick={handleChangeNow}>더보기</button>
-          )}
-        </div>
+      </div>
+      <div className='button_wrap'>
+        {page === 10 ? null : (
+          <button className='button_more' onClick={handleChangeNow}>
+            더보기
+          </button>
+        )}
       </div>
       <p className='tag_name'>#인기작</p>
       <div className='popular'>
         {popList.map((movie) => {
           return <MoviePop movie={movie} key={movie.id} />;
         })}
-        {page === 10 ? null : <button onClick={handleChangePop}>더보기</button>}
+      </div>
+      <div className='button_wrap'>
+        {page === 10 ? null : (
+          <button className='button_more' onClick={handleChangePop}>
+            더보기
+          </button>
+        )}
       </div>
     </>
   );
