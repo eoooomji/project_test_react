@@ -1,21 +1,33 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import Tmdb_main from './Tmdb_main';
-import TmdbsearchUrl from '../commonApi_tmdb/tmdbSearchUrl';
 import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
-import Search_Movie from './Search_info';
+import Search_Movie from './Search_movie';
 import Genre_btn from './Tmdb_genre';
+import TmdbSearchMovieUrl from '../commonApi_tmdb/tmdbSearchMovieUrl';
+import Search_people from './Search_person';
+import TmdbSearchPeopleUrl from '../commonApi_tmdb/tmdbSearchPersonUrl';
 
 const Movie = () => {
   const [searchMovieList, setSearchMovieList] = useState([]);
+  const [searchPeople, setSearchPeople] = useState([]);
   const [input, setInput] = useState('');
   const lang = '&language=ko';
 
-  const getSearchList = async (e) => {
+  // 영화 검색 or 사람 검색 옵션
+  const [searchType, setSearchType] = useState('movie_search');
+
+  const onSelect = (e) => {
+    setSearchType(e.target.value);
+  };
+
+  ////////////////////////////////////////////////////////////////////////
+
+  // 영화 검색
+  const getSearchList = async () => {
     await axios
       .get(
-        TmdbsearchUrl +
+        TmdbSearchMovieUrl +
           '?api_key=' +
           TMDB_KEY +
           lang +
@@ -33,15 +45,49 @@ const Movie = () => {
       });
   };
 
-  const handleInputText = (e) => {
+  const handleInputMovie = (e) => {
     e.preventDefault();
     setInput(e.target.value);
     setSearchMovieList('');
   };
 
+  ////////////////////////////////////////////////////////////////////////
+
+  // 사람 검색
+  const getPeopleList = async () => {
+    await axios
+      .get(
+        TmdbSearchPeopleUrl +
+          '?api_key=' +
+          TMDB_KEY +
+          lang +
+          '&query=' +
+          input +
+          '&include_adulte=false'
+      )
+      .then((response) => {
+        setInput(input);
+        setSearchPeople(response.data.results);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const handleInputPeople = (e) => {
+    e.preventDefault();
+    setInput(e.target.value);
+    setSearchPeople('');
+  };
+
   const searchMv = async (e) => {
     e.preventDefault();
-    getSearchList();
+    // getSearchList();
+    if (searchType === 'movie_search') {
+      getSearchList();
+    } else if (searchType === 'people_search') {
+      getPeopleList();
+    }
   };
 
   return (
@@ -49,14 +95,34 @@ const Movie = () => {
       <form onSubmit={searchMv}>
         <div className='search_wrap'>
           <div className='search_box'>
-            <input
-              type='text'
-              required={true}
-              placeholder='검색어를 입력해주세요.'
-              onChange={handleInputText}
-              value={input}
-            />
-            <input type='submit' value='검색' />
+            <select value={searchType} onChange={onSelect}>
+              <option value='movie_search'>영화</option>
+              <option value='people_search'>배우 및 감독</option>
+            </select>
+            {searchType === 'movie_search' ? (
+              <>
+                <input
+                  type='text'
+                  required={true}
+                  placeholder='검색어를 입력해주세요.'
+                  onChange={handleInputMovie}
+                  value={input}
+                />
+                <input type='submit' value='검색' />
+              </>
+            ) : null}
+            {searchType === 'people_search' ? (
+              <>
+                <input
+                  type='text'
+                  required={true}
+                  placeholder='검색어를 입력해주세요.'
+                  onChange={handleInputPeople}
+                  value={input}
+                />
+                <input type='submit' value='검색' />
+              </>
+            ) : null}
           </div>
         </div>
       </form>
@@ -67,13 +133,24 @@ const Movie = () => {
       <br />
       {input === '' ? (
         <Tmdb_main />
-      ) : (
+      ) : searchType === 'movie_search' ? (
         <>
           <div className='movieList' style={{ marginTop: 20, marginLeft: 50 }}>
             <div>
               {searchMovieList &&
-                searchMovieList.map((movie, index) => {
-                  return <Search_Movie movie={movie} key={index} />;
+                searchMovieList.map((movie, idx) => {
+                  return <Search_Movie movie={movie} key={idx} />;
+                })}
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className='movieList' style={{ marginTop: 20, marginLeft: 50 }}>
+            <div>
+              {searchPeople &&
+                searchPeople.map((people, idx) => {
+                  return <Search_people people={people} key={idx} />;
                 })}
             </div>
           </div>

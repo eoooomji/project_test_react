@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import TmdbdiscoverUrl from '../commonApi_tmdb/tmdbDiscoverUrl';
 import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
 
@@ -52,9 +52,7 @@ const Genre_btn = () => {
           element +
           v_count
       )
-      .then((response) => {
-        console.log(response.data);
-      })
+      .then()
       .catch((err) => {
         console.log(err.message);
       });
@@ -76,9 +74,7 @@ const Genre_btn = () => {
           element +
           v_count
       )
-      .then((response) => {
-        console.log(response.data);
-      })
+      .then()
       .catch((err) => {
         console.log(err.message);
       });
@@ -86,21 +82,27 @@ const Genre_btn = () => {
 
   const handle_pop = async (e) => {
     await getPopList(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const handle_vote = async (e) => {
     await getVoteList(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const genre_pop = (
     <Popover className='category_wrap'>
       <Popover.Body>
         {genreList.map((element, idx) => (
-          <button key={element.id} value={element.id} onClick={handle_pop}>
-            {element.genre}
-          </button>
+          <NavLink
+            to={`/genre/pop/${element.id}`}
+            key={element.id}
+            value={element.id}
+          >
+            <button key={element.id} value={element.id} onClick={handle_pop}>
+              {element.genre}
+            </button>
+          </NavLink>
         ))}
       </Popover.Body>
     </Popover>
@@ -110,9 +112,15 @@ const Genre_btn = () => {
     <Popover className='category_wrap'>
       <Popover.Body>
         {genreList.map((element, idx) => (
-          <button key={element.id} value={element.id} onClick={handle_vote}>
-            {element.genre}
-          </button>
+          <NavLink
+            to={`/genre/vote/${element.id}`}
+            key={element.id}
+            value={element.id}
+          >
+            <button key={element.id} value={element.id} onClick={handle_vote}>
+              {element.genre}
+            </button>
+          </NavLink>
         ))}
       </Popover.Body>
     </Popover>

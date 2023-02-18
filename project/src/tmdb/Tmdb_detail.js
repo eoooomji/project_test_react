@@ -19,10 +19,10 @@ const MovieDetail = () => {
   });
 
   const { movie_id } = useParams();
-  if (movie_id === null) {
-    navigator();
-  }
-  console.log(movie_id);
+  // if (movie_id === null) {
+  //   navigator();
+  // }
+  //console.log(movie_id);
 
   const lang = '&language=ko';
 
@@ -49,7 +49,6 @@ const MovieDetail = () => {
         setCastInfo(response.data.cast);
         for (let i = 0; i < response.data.crew.length; i++) {
           if (response.data.crew[i].job === 'Director') {
-            //console.log(response.data.crew[i].name);
             setCrewInfo({
               id: response.data.crew[i].id,
               name: response.data.crew[i].name,
@@ -72,10 +71,14 @@ const MovieDetail = () => {
     <>
       <Header />
       <div>
-        <img
-          src={'https://image.tmdb.org/t/p/w500' + movieInfo.poster_path}
-          width='300'
-        />
+        {movieInfo.poster_path === null ? (
+          <div>이미지가 없습니다.</div>
+        ) : (
+          <img
+            src={'https://image.tmdb.org/t/p/w500' + movieInfo.poster_path}
+            width='300'
+          />
+        )}
         <div>{movieInfo.title}</div>
         <div>{movieInfo.overview}</div>
         {genre.map((element, idx) => (

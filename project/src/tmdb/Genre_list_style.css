@@ -1,0 +1,15 @@
+.genre_list {
+  width: 350px;
+  height: 300px;
+  float: left;
+}
+
+.movie_image {
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+}
+
+.poster {
+  width: 150px;
+}
