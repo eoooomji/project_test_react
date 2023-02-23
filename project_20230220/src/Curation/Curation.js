@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { baseUrl } from '../commonApi_tmdb/baseUrl';
-import Curation_gender from './Curation_gender';
-import Curation_genre from './Curation_genre';
+import CurationGender from './Curation_gender';
+import CurationGenre from './Curation_genre';
 
 const Curation = () => {
-  const [userGender, setUserGender] = useState([]);
-  const [userGenre, setUserGenre] = useState([]);
+  const [basicCuration, setBasicCuration] = useState();
+  const [choiceCuration, setChoiceCuration] = useState([]);
 
-  const [gender, setGender] = useState();
+  const [info, setInfo] = useState({});
 
   const data = new FormData();
   data.append('usercode', localStorage.getItem('usercode'));
@@ -17,10 +18,9 @@ const Curation = () => {
     await axios
       .post(baseUrl + '/curation', data)
       .then((response) => {
-        console.log(typeof response.data.gender);
-        setGender(response.data.gender);
-        setUserGender(response.data.genderInfo);
-        setUserGenre(response.data.genreInfo);
+        console.log(response.data);
+        setBasicCuration(response.data.basic_curation);
+        setChoiceCuration(response.data.choice_curation);
       })
       .catch((err) => {
         console.log(err.message);
@@ -31,32 +31,33 @@ const Curation = () => {
     getCuration();
   }, []);
 
-  console.log(userGender);
-  console.log(userGenre);
-  console.log(gender);
+  // console.log(info);
 
   return (
-    <div className='user_wrap'>
-      <div className='user_gender_wrap'>
-        {gender === '남' ? (
+    <>
+      {/* <div className='user_gender_wrap'>
+        {info.gender === '남' ? (
           <p>남자가 선호하는 영화</p>
         ) : (
           <p>여자가 선호하는 영화</p>
         )}
         {userGender &&
           userGender.map((gender, idx) => {
-            return <Curation_gender gender={gender} key={idx} />;
+            return <CurationGender gender={gender} key={idx} />;
           })}
       </div>
+      <hr />
       <div className='user_genre_wrap'>
-        <div>
-          <Curation_genre
-            genre={userGenre.genrecode}
-            key={userGenre.genrecode}
-          />
-        </div>
-      </div>
-    </div>
+        <p>{userGenre.name}을 좋아하신다면?</p>
+        <NavLink
+          to={`/genre/pop/${userGenre.genrecode}`}
+          value={userGenre.genrecode}
+        >
+          <div className='more_info'>더보기</div>
+        </NavLink>
+        <CurationGenre genre={userGenre.genrecode} key={userGenre.genrecode} />
+      </div> */}
+    </>
   );
 };
 

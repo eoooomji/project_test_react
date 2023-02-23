@@ -1,4 +1,6 @@
-const Curation_gender = (props) => {
+import { Link } from 'react-router-dom';
+
+const CurationGender = (props) => {
   const { gender } = props;
 
   return (
@@ -14,11 +16,13 @@ const Curation_gender = (props) => {
               />
             </div>
           )}
-          <div className='title'>{gender.title}</div>
         </div>
+        <Link to={`/detail/${gender.moviecode}`} value={gender.moviecode}>
+          <div className='user_gender_title'>{gender.title}</div>
+        </Link>
       </div>
     </>
   );
 };
 
-export default Curation_gender;
+export default CurationGender;

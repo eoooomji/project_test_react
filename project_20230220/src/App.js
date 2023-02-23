@@ -15,6 +15,8 @@ import LoginPage from './components/login/LoginPage';
 import LogOut from './components/login/logOut';
 import JoinForm from './components/login/JoinForm';
 import Curation from './Curation/Curation';
+import MoreNow from './tmdb/Tmdb_more_now';
+import MorePop from './tmdb/Tmdb_more_pop';
 function App() {
   return (
     <div className='App'>
@@ -38,6 +40,8 @@ function App() {
             path='board/update/:currentPage/:num'
             element={<BoardUpdate />}
           />
+          <Route path='movie/now' element={<MoreNow />} />
+          <Route path='movie/pop' element={<MorePop />} />
           <Route path='detail/:movie_id' element={<MovieDetail />} />
           <Route path='genre/pop/:genre_id' element={<Genre_pop />} />
           <Route path='genre/vote/:genre_id' element={<Genre_vote />} />

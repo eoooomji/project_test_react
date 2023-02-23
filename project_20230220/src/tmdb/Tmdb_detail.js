@@ -20,10 +20,6 @@ const MovieDetail = () => {
   });
 
   const { movie_id } = useParams();
-  // if (movie_id === null) {
-  //   navigator();
-  // }
-  //console.log(movie_id);
 
   const lang = '&language=ko';
 
@@ -31,7 +27,6 @@ const MovieDetail = () => {
     await axios
       .get(TmdbUrl + '/' + movie_id + '?api_key=' + TMDB_KEY + lang)
       .then((response) => {
-        //console.log(response.data);
         setMovieInfo(response.data);
         setGenre(response.data.genres);
       })
@@ -40,15 +35,10 @@ const MovieDetail = () => {
       });
   };
 
-  console.log(movieInfo);
-
   const getCreditInfo = async () => {
     await axios
-      .get(
-        TmdbUrl + '/' + movie_id + '/credits' + '?api_key=' + TMDB_KEY + lang
-      )
+      .get(TmdbUrl + '/' + movie_id + '/credits?api_key=' + TMDB_KEY + lang)
       .then((response) => {
-        //console.log(response.data);
         setCastInfo(response.data.cast);
         for (let i = 0; i < response.data.crew.length; i++) {
           if (response.data.crew[i].job === 'Director') {

@@ -1,15 +1,15 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import TmdbPerson from "../commonApi_tmdb/tmdbPeople";
-import TMDB_KEY from "../commonApi_tmdb/tmdb_key";
-import Footer from "../components/layout/footer";
-import Header from "../components/layout/header";
-import Credit from "./Tmdb_credit";
-import "./Tmdb_style.css";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import TmdbPerson from '../commonApi_tmdb/tmdbPeople';
+import TMDB_KEY from '../commonApi_tmdb/tmdb_key';
+import Footer from '../components/layout/footer';
+import Header from '../components/layout/header';
+import Credit from './Tmdb_credit';
+import './Tmdb_style.css';
 
 const Person = () => {
-  const lang = "&language=ko";
+  const lang = '&language=ko';
   const { person_id } = useParams();
 
   // 인물 정보
@@ -18,10 +18,10 @@ const Person = () => {
 
   const getPersonInfo = async () => {
     await axios
-      .get(TmdbPerson + person_id + "?api_key=" + TMDB_KEY + lang)
+      .get(TmdbPerson + person_id + '?api_key=' + TMDB_KEY + lang)
       .then((response) => {
         setPersonInfo(response.data);
-        setPersonName(response.data.also_known_as);
+        setPersonName(response.data.name);
       })
       .catch((err) => {
         console.log(err.message);
@@ -34,30 +34,29 @@ const Person = () => {
 
   return (
     <>
-      <div className="person_detail_wrap">
-        <div className="person_detail_subject">인물 정보</div>
-        <div className="person_detail_profile">
-          <div className="person_detail_img">
+      <div className='person_detail_wrap'>
+        <div className='person_detail_subject'>인물 정보</div>
+        <div className='person_detail_profile'>
+          <div className='person_detail_img'>
             {personInfo.profile_path === null ? (
-              <img src="/images/none_img.jpg" width="200" />
+              <img src='/images/none_img.jpg' width='200' />
             ) : (
               <img
                 src={
-                  "https://image.tmdb.org/t/p/w500" + personInfo.profile_path
+                  'https://image.tmdb.org/t/p/w500' + personInfo.profile_path
                 }
-                width="300"
+                width='300'
               />
             )}
           </div>
-          <div className="person_detail_text">
-            <div className="person_detail_department">
+          <div className='person_detail_text'>
+            <div className='person_detail_department'>
               <p>-{personInfo.known_for_department}-</p>
             </div>
-            <div className="person_detail_name">
-              <span className="person_detail_name_0">{personName[0]}</span>
-              <div className="person_detail_name_2">{personName[2]}</div>
+            <div className='person_detail_name'>
+              <span className='person_detail_name'>{personName}</span>
             </div>
-            <div className="person_detail_birth">
+            <div className='person_detail_birth'>
               <span>출생 {personInfo.birthday}</span>
               {personInfo.deathday !== null ? (
                 <span>
@@ -67,7 +66,7 @@ const Person = () => {
             </div>
           </div>
         </div>
-        <div className="person_detail_credit_wrap">
+        <div className='person_detail_credit_wrap'>
           <Credit
             id={person_id}
             key={person_id}
