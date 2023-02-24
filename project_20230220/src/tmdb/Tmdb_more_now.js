@@ -36,31 +36,40 @@ const MoreNow = () => {
     getMovieList(e.target.value);
   };
 
+  console.log(movieList);
+
   return (
     <>
       <div className='movieTile_section'>
         {movieList.map((movie, idx) => {
-          <div className='movie_tile' key={idx}>
-            <div className='movie_poster'>
-              <img
-                src={'https://image.tmdb.org/t/p/w500' + movie.poster_path}
-                width='300'
-              />
+          return (
+            <div className='movie_tile' key={idx}>
+              <div className='movie_poster'>
+                <img
+                  src={'https://image.tmdb.org/t/p/w500' + movie.poster_path}
+                  width='300'
+                />
+              </div>
+              <div className='movie_title'>
+                <NavLink
+                  to={`/detail/${movie.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <p style={{ color: 'black' }}>{movie.title}</p>
+                </NavLink>
+              </div>
             </div>
-            <div className='movie_title'>
-              <NavLink
-                to={`/detail/${movie.id}`}
-                style={{ textDecoration: 'none' }}
-              >
-                <p>{movie.title}</p>
-              </NavLink>
-            </div>
-          </div>;
+          );
         })}
-        <button className='plus_button' onClick={handleChangeNow}>
-          더보기
-        </button>
       </div>
+
+      <button
+        className='plus_button'
+        style={{ marginTop: '500px' }}
+        onClick={handleChangeNow}
+      >
+        더보기
+      </button>
     </>
   );
 };

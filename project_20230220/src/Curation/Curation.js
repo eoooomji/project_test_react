@@ -1,15 +1,26 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { json, NavLink } from 'react-router-dom';
 import { baseUrl } from '../commonApi_tmdb/baseUrl';
-import CurationGender from './Curation_gender';
-import CurationGenre from './Curation_genre';
+import BasicCuration from './basic_curation';
+import ChoiceCuration from './choice_curation';
 
 const Curation = () => {
-  const [basicCuration, setBasicCuration] = useState();
-  const [choiceCuration, setChoiceCuration] = useState([]);
-
-  const [info, setInfo] = useState({});
+  // 전체 기준
+  const [basicCuration, setBasicCuration] = useState({
+    bestMovie: [{}],
+    bestCast: {},
+    bestDirector: {},
+    bestGenre: {},
+  });
+  // 유저 기준
+  const [choiceCuration, setChoiceCuration] = useState({
+    user: '',
+    curationMovie: [{}],
+    curationGenre: {},
+    curationDirector: {},
+    curationCast: {},
+  });
 
   const data = new FormData();
   data.append('usercode', localStorage.getItem('usercode'));
@@ -19,8 +30,19 @@ const Curation = () => {
       .post(baseUrl + '/curation', data)
       .then((response) => {
         console.log(response.data);
-        setBasicCuration(response.data.basic_curation);
-        setChoiceCuration(response.data.choice_curation);
+        setBasicCuration({
+          bestCast: response.data.basic_curation.bestCast,
+          bestDirector: response.data.basic_curation.bestDirector,
+          bestGenre: response.data.basic_curation.bestGenre,
+          bestMovie: response.data.basic_curation.bestMovie,
+        });
+        setChoiceCuration({
+          user: response.data.choice_curation.user,
+          curationMovie: response.data.choice_curation.CurationMovie,
+          curationGenre: response.data.choice_curation.CurationGenre,
+          curationDirector: response.data.choice_curation.CurationDirector,
+          curationCast: response.data.choice_curation.CurationCast,
+        });
       })
       .catch((err) => {
         console.log(err.message);
@@ -31,32 +53,19 @@ const Curation = () => {
     getCuration();
   }, []);
 
-  // console.log(info);
-
   return (
     <>
-      {/* <div className='user_gender_wrap'>
-        {info.gender === '남' ? (
-          <p>남자가 선호하는 영화</p>
-        ) : (
-          <p>여자가 선호하는 영화</p>
-        )}
-        {userGender &&
-          userGender.map((gender, idx) => {
-            return <CurationGender gender={gender} key={idx} />;
-          })}
+      <div className='curation_wrap'>
+        <div className='basic_curation_wrap'>
+          <BasicCuration basicCuration={basicCuration} />
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div className='choice_curation_wrap'>
+          <ChoiceCuration choiceCuration={choiceCuration} />
+        </div>
       </div>
-      <hr />
-      <div className='user_genre_wrap'>
-        <p>{userGenre.name}을 좋아하신다면?</p>
-        <NavLink
-          to={`/genre/pop/${userGenre.genrecode}`}
-          value={userGenre.genrecode}
-        >
-          <div className='more_info'>더보기</div>
-        </NavLink>
-        <CurationGenre genre={userGenre.genrecode} key={userGenre.genrecode} />
-      </div> */}
     </>
   );
 };
